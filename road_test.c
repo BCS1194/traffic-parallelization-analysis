@@ -19,7 +19,8 @@ struct road {
 };
 
 
-int simulation_one() {
+int simulation_one() 
+{
   struct road a;// = malloc(sizeof(10));
   a.cost        = 3;
   a.length 	= 6;
@@ -28,14 +29,26 @@ int simulation_one() {
   a.origin	= 'a';
   a.destination = 'b';
 
- /* car mazda = malloc(sizeof(car));
-
+  /* 
+  car mazda = malloc(sizeof(car));
   mazda.path = [];
   mazda.speed = 1;
+  */
 
- int rand = Math.random(srand());*/
+  int randomNum = rand();
+
+  if (randomNum == 0) {
+    a.cars += Mazda
+    a.capacity++
+    mazda.path += a, b
+    a.cost = some equation to calculate cost
+  }
+  else {
+
+  }
 }
 
-int main() {
+int main() 
+{
   return 0;
 }
