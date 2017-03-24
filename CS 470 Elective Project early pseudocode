@@ -1,0 +1,69 @@
+/*
+ *  TRAFFIC PATTERN ANALYSIS
+ *  C -BASED PSEUDOCODE
+ *  3/22/17
+ */
+
+/*
+ * Traffic will be represented with roads and nodes (cars). Roads have an associated cost
+ * value wich is determined primarily by the time it takes to travel from the origin point
+ * to the destination point on that road. Travel time is determined by the number of cars
+ * traveling on that road at a given time, as well as the measure of distance of that road.
+ */
+
+class traffic_simulation
+{
+    struct road
+    {
+        int cost
+        int length
+        int capacity
+        int time
+        char origin
+        char destination
+        car[] cars
+    }
+
+    struct car
+    {
+        char[] path
+        int speed
+    }
+
+
+
+    simulation1()
+    {
+        road A      = malloc(sizeof(road))
+
+        A.cost      = 3
+        A.length    = 6
+        A.capacity  = 10
+        A.time      = 1
+        A.origin    = 'a'
+        A.destination = 'b'
+
+
+        car Mazda   = malloc(sizeof(car))
+
+        Mazda.path  = []
+        Mazda.speed = 1
+
+
+        int rand = Math.random(srand())
+
+        if(rand == 0)
+        {
+            A.cars += Mazda
+            A.capacity++
+
+            Mazda.path += a, b
+
+            A.cost = some equation to calculate cost
+        }
+        else
+        {
+
+        }
+    }
+}
