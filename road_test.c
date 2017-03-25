@@ -24,7 +24,7 @@ struct road {
 
 int simulation_one() 
 {
-  road a = {a.size, 0, 10, NULL, NULL, NULL};
+  struct road a = {a.size, 0, 10};//, 'c', 'd', NULL};
   /*
     a.size        = 0;
     a.capacity    = 10;
@@ -36,7 +36,7 @@ int simulation_one()
     //a.length 	= 6;
     //a.time	= 1;
 
-  car car1    = {1, NULL};
+  struct car car1 = {1, NULL};
   /*
     car1.size   = 1;
     car1.path   = [];
