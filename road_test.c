@@ -4,48 +4,45 @@
 #include <time.h>
 
 struct car {
-  int speed;
-  char path[];
+  //int speed;
+  int size;     //size of the car; standard is 1
+  char path[];  //a record of the nodes visited by the car
 };
 
 struct road {
-  int cost;
-  int length;
-  int capacity;
-  int time;
-  char origin;
-  char destination;
-  struct car cars[];
+  int cost;           //the weight cost of the road
+  int size;           //the current size of the road
+  int capacity;       //the maximum possible size of the road
+  char origin;        //the start node
+  char destination;   //the end node, must match the start node of the next road to be joined
+  struct car cars[];  //a list of the cars currently on this road
+  
+  //int length;       //the distance (in measurable units) of the road
+  //int time;         //the time it would take for a car to get from start to end
 };
 
 
 int simulation_one() 
 {
-  struct road a;// = malloc(sizeof(10));
-  a.cost        = 3;
-  a.length 	= 6;
-  a.capacity    = 10;
-  a.time	= 1;
-  a.origin	= 'a';
-  a.destination = 'b';
-
-  /* 
-  car mazda = malloc(sizeof(car));
-  mazda.path = [];
-  mazda.speed = 1;
+  road a = {a.size, 0, 10, NULL, NULL, NULL};
+  /*
+    a.size        = 0;
+    a.capacity    = 10;
+    a.origin	    = NULL;
+    a.destination = NULL;
+    a.cost        = a.size;
   */
+  
+    //a.length 	= 6;
+    //a.time	= 1;
 
-  int randomNum = rand();
-
-  if (randomNum == 0) {
-    a.cars += Mazda
-    a.capacity++
-    mazda.path += a, b
-    a.cost = some equation to calculate cost
-  }
-  else {
-
-  }
+  car car1    = {1, NULL};
+  /*
+    car1.size   = 1;
+    car1.path   = [];
+  */
+  
+  
 }
 
 int main() 
