@@ -37,19 +37,19 @@ int simulation_one()
     car1.size = 1;
     
     // Initializes different roads to choose from.
-    struct road a = { 1, 4, 4, 10, 'a', '0', a.cars[10]};       // Origin road
-    struct road b = { 2, 3, 3, 10, 'b', '0', b.cars[10]};       // Origin road
-    struct road c = { 3, 1, 6, 10, 'c', 'e', c.cars[10]};
-    struct road d = { 4, 2, 2, 10, 'd', 'm', d.cars[10]};
-    struct road e = { 5, 5, 5, 10, 'e', '0', e.cars[10]};
-    struct road f = { 6, 7, 7, 10, 'f', '0', f.cars[10]};
-    struct road g = { 7, 3, 3, 10, 'g', '0', g.cars[10]};
-    struct road h = { 8, 4, 4, 10, 'h', '0', h.cars[10]};
-    struct road i = { 9, 2, 2, 10, 'i', '0', i.cars[10]};
-    struct road j = {10, 4, 4, 10, 'j', '0', j.cars[10]};
-    struct road k = {11, 5, 5, 10, 'k', '0', k.cars[10]};
-    struct road l = {12, 2, 2, 10, 'l', '0', l.cars[10]};        // Destination road
-    struct road m = {13, 4, 4, 10, 'm', '0', m.cars[10]};        // Destination road
+    struct road a = { 1, 4, 4, 10, 'a', '0', {a.cars[10]}};       // Origin road
+    struct road b = { 2, 3, 3, 10, 'b', '0', {b.cars[10]}};       // Origin road
+    struct road c = { 3, 1, 6, 10, 'c', 'e', {c.cars[10]}};
+    struct road d = { 4, 2, 2, 10, 'd', 'm', {d.cars[10]}};
+    struct road e = { 5, 5, 5, 10, 'e', '0', {e.cars[10]}};
+    struct road f = { 6, 7, 7, 10, 'f', '0', {f.cars[10]}};
+    struct road g = { 7, 3, 3, 10, 'g', '0', {g.cars[10]}};
+    struct road h = { 8, 4, 4, 10, 'h', '0', {h.cars[10]}};
+    struct road i = { 9, 2, 2, 10, 'i', '0', {i.cars[10]}};
+    struct road j = {10, 4, 4, 10, 'j', '0', {j.cars[10]}};
+    struct road k = {11, 5, 5, 10, 'k', '0', {k.cars[10]}};
+    struct road l = {12, 2, 2, 10, 'l', '0', {l.cars[10]}};        // Destination road
+    struct road m = {13, 4, 4, 10, 'm', '0', {m.cars[10]}};        // Destination road
     
     // The cars initial choice to start on road a or b.
     if (a.cost < b.cost) {
