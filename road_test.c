@@ -6,7 +6,6 @@
 //linked list
 /*typedef*/
 struct node_log {
-<<<<<<< HEAD
     char node;               // The value or data stored in the node
     struct node_log * next;  // A reference to the next node, null for last node
 } /*node_t*/;
@@ -34,7 +33,6 @@ struct road shortest_path(struct road a, struct road b, struct road c);
 
 int simulation_one()
 {
-<<<<<<< HEAD
     struct car car1 = {1};
     car1.size = 1;
     char temp;
