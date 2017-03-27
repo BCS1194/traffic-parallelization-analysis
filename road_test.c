@@ -3,7 +3,7 @@
 #include <string.h>
 #include <time.h>
 
-//we plan on implementing a linked list and using this structure for the final deliverable.
+// We plan on implementing a linked list and using this structure for the final deliverable.
 /*typedef*/
 /*struct node_log {
     char node;              // The value or data stored in the node
@@ -52,7 +52,6 @@ int simulation_one()
     struct road l = {12, 2, 2, 10, 'l', '0', l.cars[10]};        // Destination road
     struct road m = {13, 4, 4, 10, 'm', '0', m.cars[10]};        // Destination road
     
-    
     // The cars initial choice to start on road a or b.
     if (a.cost < b.cost) {
         a.cars[0] = car1;
@@ -66,8 +65,6 @@ int simulation_one()
         b.origin = 'b';
         printf("Car 1 entered on road b\n");
     }
-    
-    
     
     // Based on the previous road and the shortest path function, next road is chosen.
     if (a.cost > a.size) {
@@ -196,9 +193,9 @@ void setup(struct road origin, struct road next_road, struct car car)
     next_road.cars[0]   = car;
     origin.cost        -= car.size;
     next_road.cost     += car.size;
+    
     if (next_road.origin == 'm' || next_road.origin == 'l')
         printf("Car 1 left road %c and reached its destination of road %c\n", origin.origin, next_road.origin);
     else
         printf("Car 1 left road %c and entered road %c\n", origin.origin, next_road.origin);
-        
 }
