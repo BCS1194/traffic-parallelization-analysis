@@ -3,7 +3,7 @@
 #include <string.h>
 #include <time.h>
 
-//we plan on implementing a linked list and using the following structure for our final assignment.
+//we plan on implementing a linked list and using this structure for the final deliverable.
 /*typedef*/
 /*struct node_log {
     char node;              // The value or data stored in the node
@@ -37,7 +37,7 @@ int simulation_one()
     struct car car1 = {1};
     car1.size = 1;
     
-    // Initializes different roads to choose from
+    // Initializes different roads to choose from.
     struct road a = { 1, 4, 4, 10, 'a', '0', a.cars[10]};       // Origin road
     struct road b = { 2, 3, 3, 10, 'b', '0', b.cars[10]};       // Origin road
     struct road c = { 3, 1, 6, 10, 'c', 'e', c.cars[10]};
@@ -53,7 +53,7 @@ int simulation_one()
     struct road m = {13, 4, 4, 10, 'm', '0', m.cars[10]};        // Destination road
     
     
-    // The cars initial choice to start on road a or b
+    // The cars initial choice to start on road a or b.
     if (a.cost < b.cost) {
         a.cars[0] = car1;
         a.cost += car1.size;
@@ -69,12 +69,12 @@ int simulation_one()
     
     
     
-    // Based on the previous road and the shortest path function, next road is chosen
+    // Based on the previous road and the shortest path function, next road is chosen.
     if (a.cost > a.size) {
         struct road shortest = shortest_path_three(c, d, e);
         setup(a, shortest, car1);
         
-        // If statement based on which road the shortest_path function chose
+        // If statement based on which road the shortest_path function chose.
         if (shortest.origin == 'c') {
             struct road next_road = h;
             setup(shortest, next_road, car1);
@@ -90,7 +90,7 @@ int simulation_one()
             struct road next_road = shortest_path(i, j);
             setup(shortest, next_road, car1);
             
-            // If statement based on which road the shortest_path function chose
+            // If statement based on which road the shortest_path function chose.
             if (shortest.origin == 'i') {
                 struct road next_road = m;
                 setup(shortest, next_road, car1);
@@ -106,7 +106,7 @@ int simulation_one()
         struct road shortest = shortest_path(f, g);
         setup(b, shortest, car1);
         
-        // If statement based on which road the shortest_path function chose
+        // If statement based on which road the shortest_path function chose.
         if (shortest.origin == 'f') {
             struct road next_road = shortest_path(i,j);
             setup(shortest, next_road, car1);
@@ -143,7 +143,6 @@ int main()
  * This function takes in two different roads and will choose the
  * cars next road based on the cost of traveling on each road, then
  * it will return the road with the lowest cost/shortest path.
- *
  *******************************************************************/
 struct road shortest_path(struct road a, struct road b)
 {
@@ -161,7 +160,6 @@ struct road shortest_path(struct road a, struct road b)
  * This function takes in three different roads and will choose the
  * cars next road based on the cost of traveling on each road, then
  * it will return the road with the lowest cost/shortest path.
- *
  *******************************************************************/
 struct road shortest_path_three(struct road a, struct road b, struct road c)
 {
@@ -191,7 +189,6 @@ struct road shortest_path_three(struct road a, struct road b, struct road c)
  * This function takes in the old road, the next_road, and the car and
  * will move the car from the old road to the new road and print
  * out a message for the user.
- *
  *******************************************************************/
 void setup(struct road origin, struct road next_road, struct car car)
 {
