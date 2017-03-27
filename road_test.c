@@ -64,7 +64,7 @@ int simulation_one()
     }
     // printf("Car %d left spot %d and moved to spot %d\n", jj, ii, ii+1 );
   }
-  
+  return 1;
 }
 
 int main()
