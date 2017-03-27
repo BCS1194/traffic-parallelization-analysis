@@ -12,7 +12,7 @@
 
 struct car {
     int size;                 // Size of the car; standard is 1
-    //struct node_log path;     // A record of the nodes visited by the car
+    //struct node_log path;   // A record of the nodes visited by the car
 };
 
 struct road {
@@ -35,10 +35,10 @@ int simulation_one()
 {
     struct car car1 = {1};
     car1.size = 1;
-    
+
     // Initializes different roads to choose from.
-    struct road a = { 1, 4, 4, 10, 'a', '0', {a.cars[10]}};       // Origin road
-    struct road b = { 2, 3, 3, 10, 'b', '0', {b.cars[10]}};       // Origin road
+    struct road a = { 1, 4, 4, 10, 'a', '0', {a.cars[10]}}; // Origin road
+    struct road b = { 2, 3, 3, 10, 'b', '0', {b.cars[10]}}; // Origin road
     struct road c = { 3, 1, 6, 10, 'c', 'e', {c.cars[10]}};
     struct road d = { 4, 2, 2, 10, 'd', 'm', {d.cars[10]}};
     struct road e = { 5, 5, 5, 10, 'e', '0', {e.cars[10]}};
@@ -48,9 +48,9 @@ int simulation_one()
     struct road i = { 9, 2, 2, 10, 'i', '0', {i.cars[10]}};
     struct road j = {10, 4, 4, 10, 'j', '0', {j.cars[10]}};
     struct road k = {11, 5, 5, 10, 'k', '0', {k.cars[10]}};
-    struct road l = {12, 2, 2, 10, 'l', '0', {l.cars[10]}};        // Destination road
-    struct road m = {13, 4, 4, 10, 'm', '0', {m.cars[10]}};        // Destination road
-    
+    struct road l = {12, 2, 2, 10, 'l', '0', {l.cars[10]}}; // Destination road
+    struct road m = {13, 4, 4, 10, 'm', '0', {m.cars[10]}}; // Destination road
+
     // The cars initial choice to start on road a or b.
     if (a.cost < b.cost) {
         a.cars[0] = car1;
@@ -64,17 +64,17 @@ int simulation_one()
         b.origin = 'b';
         printf("Car 1 entered on road b\n");
     }
-    
+
     // Based on the previous road and the shortest path function, next road is chosen.
     if (a.cost > a.size) {
         struct road shortest = shortest_path_three(c, d, e);
         setup(a, shortest, car1);
-        
+
         // If statement based on which road the shortest_path function chose.
         if (shortest.origin == 'c') {
             struct road next_road = h;
             setup(shortest, next_road, car1);
-            
+
             next_road = m;
             setup(shortest, next_road, car1);
         }
@@ -85,7 +85,7 @@ int simulation_one()
         else if (shortest.origin == 'e') {
             struct road next_road = shortest_path(i, j);
             setup(shortest, next_road, car1);
-            
+
             // If statement based on which road the shortest_path function chose.
             if (shortest.origin == 'i') {
                 struct road next_road = m;
@@ -97,16 +97,16 @@ int simulation_one()
             }
         }
     }
-  
+
     if (b.cost > b.size) {
         struct road shortest = shortest_path(f, g);
         setup(b, shortest, car1);
-        
+
         // If statement based on which road the shortest_path function chose.
         if (shortest.origin == 'f') {
             struct road next_road = shortest_path(i,j);
             setup(shortest, next_road, car1);
-      
+
             if (shortest.origin == 'i') {
                 struct road next_road = m;
                 setup(shortest, next_road, car1);
@@ -119,7 +119,7 @@ int simulation_one()
         else if (shortest.origin == 'g') {
             struct road next_road = k;
             setup(shortest, next_road, car1);
-            
+
             if (next_road.origin == 'k') {
                 struct road next_road = l;
                 setup(shortest, next_road, car1);
@@ -192,7 +192,7 @@ void setup(struct road origin, struct road next_road, struct car car)
     next_road.cars[0]   = car;
     origin.cost        -= car.size;
     next_road.cost     += car.size;
-    
+
     if (next_road.origin == 'm' || next_road.origin == 'l')
         printf("Car 1 left road %c and reached its destination of road %c\n", origin.origin, next_road.origin);
     else
