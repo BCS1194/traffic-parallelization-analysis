@@ -12,7 +12,7 @@
 
 struct car {
     int size;                 // Size of the car; standard is 1
-    struct node_log path;     // A record of the nodes visited by the car
+    //struct node_log path;     // A record of the nodes visited by the car
 };
 
 struct road {
