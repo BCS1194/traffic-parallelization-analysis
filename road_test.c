@@ -6,26 +6,25 @@
 // We plan on implementing a linked list and using this structure for the final deliverable.
 /*typedef*/
 /*struct node_log {
-    char node;              // The value or data stored in the node
-    struct node_log * next; // A reference to the next node, null for last node
+    char node;                // The value or data stored in the node
+    struct node_log * next;   // A reference to the next node, null for last node
 };*/ /*node_t*/
 
 struct car {
-    //int speed;
-    int size;               // Size of the car; standard is 1
-    struct node_log path;   // A record of the nodes visited by the car
+    int size;                 // Size of the car; standard is 1
+    struct node_log path;     // A record of the nodes visited by the car
 };
 
 struct road {
-    int road_id;            // The number of the road
-    int cost;               // The weight cost of the road
-    int size;               // The current size of the road
-    int capacity;           // The maximum possible size of the road
-    char origin;            // The start node
-    char destination;       // The end node, must match start node of next road chosen
-    struct car cars[10];    // A list of the cars currently on this road
-  char node;                // The value or data stored in the node
-  struct node_log * next;   // A reference to the next node, null for last node
+    int road_id;              // The number of the road
+    int cost;                 // The weight cost of the road
+    int size;                 // The current size of the road
+    int capacity;             // The maximum possible size of the road
+    char origin;              // The start node
+    char destination;         // The end node, must match start node of next road chosen
+    struct car cars[10];      // A list of the cars currently on this road
+    char node;                // The value or data stored in the node
+    struct node_log * next;   // A reference to the next node, null for last node
 };
 
 struct road shortest_path(struct road a, struct road b);
