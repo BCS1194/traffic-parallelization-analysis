@@ -5,16 +5,16 @@ int cars_buffer[100];
 
 int main()
 {
-    int lines;
+    int numLines;
     int cars_count;
     int roads_count;
     char filename[26]; //look in to this
     int num_roads_remaining;
 
     getFilename(filename);
-    lines = countLines(filename);
-    road_t roads[lines];
-    readFile(filename, roads, lines);
+    numLines = countLines(filename);
+    road_t roads[numLines];
+    readFile(filename, roads, numLines);
     num_roads_remaining = (sizeof(roads) / sizeof(int)) / 2;
     //printf("filename: %s\n", filename);
 
@@ -33,7 +33,7 @@ int main()
     }*/
 
    
-    printf("*****%d\n", lines);
+    printf("*****%d\n", numLines);
     simulation_one(roads, num_roads_remaining);
 
 
@@ -46,15 +46,18 @@ void getFilename(char *filename)
     scanf("%s", filename);
 }
 
-void readFile(char *filename, road_t roads[], int lines)
+void readFile(char *filename, road_t roads[], int numLines)
 { 
     FILE * fp;
     int ii = 0;
     int jj = 0;
 
     fp = fopen(filename, "r");//change to filename
-
-    for(ii = 0; ii < lines; ii++)
+    if (!fp) {
+        printf("Error file does not exist.\n");
+        exit(0);
+    }
+    for(ii = 0; ii < numLines; ii++)
     {
       fscanf(fp,"%d,%c\n", &roads[ii].cost, &roads[ii].id);
       printf("%d %c\n", roads[ii].cost, roads[ii].id);
@@ -116,21 +119,21 @@ void shortest_path(road_t roads[], road_t a, road_t b, int num_roads_remaining, 
 int countLines(char *filename)
 {
     // count the number of lines in the file called filename
-    
-    FILE *fp = fopen(filename,"r");
     int ch=0;
-    int lines=0;
+    int numLines=0;
+    FILE *fp = fopen(filename,"r");
+    
     
     if (fp == NULL)
         return 0;
     
-    lines++;
+    numLines++;
     while ((ch = fgetc(fp)) != EOF)
     {
         if (ch == '\n')
-            lines++;
+            numLines++;
     }
     fclose(fp);
-    return (lines - 1);
+    return (numLines - 1);
 }
 
