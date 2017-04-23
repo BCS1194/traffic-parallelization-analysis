@@ -15,9 +15,9 @@ typedef struct road {
 } node_t;*/
 
 void shortest_path(road_t roads[], road_t a, road_t b, int num_roads_remaining, int jj);
-void getFilename(char *filename);
-int countLines(char *filename);
-void readFile(char *filename, road_t roads[], int lines);
+void get_filename(char *filename);
+int count_lines(char *filename);
+void read_file(char *filename, road_t roads[], int lines);
 void simulation_one(road_t roads[], int num_roads_remaining);
 
 

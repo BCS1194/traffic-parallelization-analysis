@@ -8,16 +8,16 @@ int cars_buffer[100];
  *******************************************************************/
 int main()
 {
-    int numLines;
+    int num_lines;
     int cars_count;
     int roads_count;
     char filename[26]; //look in to this
     int num_roads_remaining;
 
-    getFilename(filename);
-    numLines = countLines(filename);
-    road_t roads[numLines];
-    readFile(filename, roads, numLines);
+    get_filename(filename);
+    num_lines = count_lines(filename);
+    road_t roads[num_lines];
+    read_file(filename, roads, num_lines);
     num_roads_remaining = (sizeof(roads) / sizeof(int)) / 2;
 
     printf("Enter a number (1-100) for the number of cars you would like to generate: ");
@@ -42,7 +42,7 @@ int main()
 /********************************************************************
  * This function gets the name of the file.
  *******************************************************************/
-void getFilename(char *filename) 
+void get_filename(char *filename) 
 {
     printf("Enter filename: ");
     scanf("%s", filename);
@@ -52,7 +52,7 @@ void getFilename(char *filename)
  * This function reads the contents of a file and saves it to the
  * road_t struct.
  *******************************************************************/
-void readFile(char *filename, road_t roads[], int numLines)
+void read_file(char *filename, road_t roads[], int num_lines)
 { 
     FILE * fp;
     int ii = 0;
@@ -62,7 +62,7 @@ void readFile(char *filename, road_t roads[], int numLines)
         printf("Error file does not exist.\n");
         exit(0);
     }
-    for(ii = 0; ii < numLines; ii++)
+    for(ii = 0; ii < num_lines; ii++)
     {
       fscanf(fp,"%d,%c\n", &roads[ii].cost, &roads[ii].id);
       //printf("%d %c\n", roads[ii].cost, roads[ii].id);
@@ -120,24 +120,25 @@ void shortest_path(road_t roads[], road_t a, road_t b, int num_roads_remaining, 
  * This function takes in a file and counts the number of lines
  * that are used in the file and returns the number of lines.
  *******************************************************************/
-int countLines(char *filename)
+int count_lines(char *filename)
 {
-    // count the number of lines in the file called filename
     int line = 0;
-    int numLines = 0;
+    int num_lines = 0;
     FILE *fp = fopen(filename,"r");
     
-    
-    if (fp == NULL)
+    if (!fp) {
+        printf("Error file does not exist.\n");
         return 0;
+    }
     
-    numLines++;
+    num_lines++;
+
     while ((line = fgetc(fp)) != EOF)
     {
         if (line == '\n')
-            numLines++;
+            num_lines++;
     }
     fclose(fp);
-    return (numLines - 1);
+    return (num_lines - 1);
 }
 
