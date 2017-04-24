@@ -81,7 +81,7 @@ void simulation_one(road_t roads[], int num_roads_remaining)
     //printf("\n%ld\n", (sizeof(roads) / sizeof(int)) / 2);
     //printf("%d\n", num_roads_remaining);
 
-    printf("OUTSIDE CALL: %d %c\n", shortest.cost, shortest.id);
+    //printf("OUTSIDE CALL: %d %c\n", shortest.cost, shortest.id);
 
     shortest_path(roads, roads[0], roads[1], num_roads_remaining, jj);
 
@@ -95,20 +95,20 @@ void simulation_one(road_t roads[], int num_roads_remaining)
  *******************************************************************/
 void shortest_path(road_t roads[], road_t a, road_t b, int num_roads_remaining, int jj)
 {
-    printf("\nThis is call %d\n", jj + 1);
+    //printf("\nThis is call %d\n", jj + 1);
 
     if(a.cost < b.cost)
         shortest = a;
     else
         shortest = b;
 
-    printf("INSIDE CALL: %d %c\n", shortest.cost, shortest.id);
+    //printf("INSIDE CALL: %d %c\n", shortest.cost, shortest.id);
 
     num_roads_remaining--;
     jj++;
 
-    printf("num_roads_remaining = %d\n", num_roads_remaining);
-    printf("index = %d\n", jj);
+    //printf("num_roads_remaining = %d\n", num_roads_remaining);
+    //printf("index = %d\n", jj);
 
     if(num_roads_remaining == 0)
         return;
@@ -137,6 +137,11 @@ int count_lines(char *filename)
     {
         if (line == '\n')
             num_lines++;
+    }
+
+    if (num_lines >= 37) {
+      printf("File has too many arguments, must limit to 35 lines.\n");
+      exit(0);
     }
     fclose(fp);
     return (num_lines - 1);
