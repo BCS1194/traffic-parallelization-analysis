@@ -8,11 +8,11 @@ int cars_buffer[100];
  *******************************************************************/
 int main()
 {
-    int num_lines;
-    int cars_count;
-    int roads_count;
+    int num_lines = 0;
+    int cars_count = 0;
+    int roads_count = 0;
     char filename[26]; //look in to this
-    int num_roads_remaining;
+    int num_roads_remaining = 0;
 
     get_filename(filename);
     num_lines = count_lines(filename);
@@ -20,14 +20,14 @@ int main()
     read_file(filename, roads, num_lines);
     num_roads_remaining = (sizeof(roads) / sizeof(int)) / 2;
 
-    printf("Enter a number (1-100) for the number of cars you would like to generate: ");
-    scanf("%d", &cars_count);
-    printf("The number of cars on the road is %d\n", cars_count);
+    //printf("Enter a number (1-100) for the number of cars you would like to generate: ");
+    //scanf("%d", &cars_count);
+    //printf("The number of cars on the road is %d\n", cars_count);
 
-    for(int i = 0; i < cars_count; i++)
+    /*for(int i = 0; i < cars_count; i++)
     {
         cars_buffer[i] = 1;
-    }
+    }*/
 
     /*for(int i = 0; i < 100; i++)
     {
@@ -64,8 +64,8 @@ void read_file(char *filename, road_t roads[], int num_lines)
     }
     for(ii = 0; ii < num_lines; ii++)
     {
-      fscanf(fp,"%d,%c\n", &roads[ii].cost, &roads[ii].id);
-      //printf("%d %c\n", roads[ii].cost, roads[ii].id);
+      fscanf(fp,"%d,%s\n", &roads[ii].cost, &roads[ii].id);
+      //printf("%d %s\n", roads[ii].cost, roads[ii].id);
     }
 
     fclose(fp);
@@ -85,7 +85,18 @@ void simulation_one(road_t roads[], int num_roads_remaining)
 
     shortest_path(roads, roads[0], roads[1], num_roads_remaining, jj);
 
-    printf("\nThe shortest cost road is %c with a cost of %d\n", shortest.id, shortest.cost);
+    printf("\nThe shortest cost road is %c with a cost of %d\n", shortest.id[0], shortest.cost);
+
+    //NEW STUFF
+    road_t first_five[5] = {roads[0], roads[1], roads[2],
+                            roads[3], roads[4]};
+
+    printf("New roads array has %ld roads stored in it\n", (sizeof(first_five) / sizeof(first_five[0])));
+
+    //road_t first_road;
+    shortest_path(first_five, first_five[0], first_five[1], 5, 0);
+
+    printf("The shortest road in the first_five array is %s\n", shortest.id);
 }
 
 /********************************************************************
@@ -147,3 +158,11 @@ int count_lines(char *filename)
     return (num_lines - 1);
 }
 
+/*
+void find_path(road_t roads[], int num_roads_remaining)
+{
+    int kk = 0;
+
+    
+}
+*/

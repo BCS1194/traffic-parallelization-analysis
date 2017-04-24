@@ -6,7 +6,7 @@
 
 typedef struct road {
     int  cost;
-    char id;             
+    char *id;             
 } road_t;
 
 /*typedef struct node {
