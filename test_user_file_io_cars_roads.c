@@ -175,18 +175,17 @@ int count_lines(char *filename)
 
 road_t find_path(road_t road, road_t new_road, road_t roads[], int num_roads_remaining)
 {
-    road_t path_opt[3];
+    road_t path_opt[4];
     int jj = 0;
     switch(road.id) {
         case 'A':
             new_road = roads[5];
             break;
         case 'B':
-            
             path_opt[0] = roads[6];
             path_opt[1] = roads[7];
             path_opt[2] = roads[8];
-            new_road = shortest_path(path_opt, roads[0], roads[1], num_roads_remaining, jj);
+            new_road = shortest_path(path_opt, path_opt[0], path_opt[1], 1, jj);
             break;
         case 'C':
             new_road = roads[9];
@@ -204,19 +203,32 @@ road_t find_path(road_t road, road_t new_road, road_t roads[], int num_roads_rem
             new_road = shortest_path(roads, roads[12], roads[13], num_roads_remaining, jj);
             break;
         case 'H':
-            printf("case H, has 4 arguments\n");
+            path_opt[0] = roads[18];
+            path_opt[1] = roads[19];
+            path_opt[2] = roads[20];
+            path_opt[3] = roads[21];
+            new_road = shortest_path(path_opt, path_opt[0], path_opt[1], 2, jj);
             break;
         case 'I':
             new_road = roads[9];
             break;
         case 'J':
-            printf("case J, has 3 arguments\n");
+            path_opt[0] = roads[14];
+            path_opt[1] = roads[15];
+            path_opt[2] = roads[16];
+            new_road = shortest_path(path_opt, path_opt[0], path_opt[1], 1, jj);
             break;
         case 'K':
-            printf("case K, has 3 arguments\n");
+            path_opt[0] = roads[14];
+            path_opt[1] = roads[15];
+            path_opt[2] = roads[16];
+            new_road = shortest_path(path_opt, path_opt[0], path_opt[1], 1, jj);
             break;
         case 'L':
-            printf("case L, has 3 arguments\n");
+            path_opt[0] = roads[14];
+            path_opt[1] = roads[15];
+            path_opt[2] = roads[16];
+            new_road = shortest_path(path_opt, path_opt[0], path_opt[1], 1, jj);
             break;
         case 'M':
             new_road = shortest_path(roads, roads[26], roads[27], num_roads_remaining, jj);
