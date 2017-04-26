@@ -35,6 +35,7 @@ int main()
         printf("%d\n", cars_buffer[i]);
     }*/
 
+    printf("%ld\n", (sizeof(roads) / sizeof(int)) / 2);
     simulation_one(roads, num_roads_remaining);
 
     //maybe implement another loop here to initialize all 100 entries to 0 first
@@ -77,7 +78,12 @@ void read_file(char *filename, road_t roads[], int num_lines)
  *******************************************************************/
 void simulation_one(road_t roads[], int num_roads_remaining)
 {
+    //the maximum number of roads that could form a path from
+    //origin to destination for this simulation
+    #define MAX_ROADS_POSS 9
+
     int jj = 0;
+    road_t path[MAX_ROADS_POSS];
     
     //printf("\n%ld\n", (sizeof(roads) / sizeof(int)) / 2);
     //printf("%d\n", num_roads_remaining);
@@ -86,28 +92,23 @@ void simulation_one(road_t roads[], int num_roads_remaining)
     
     
     
-    //road_t first_road;
     
-    shortest_path(roads, roads[0], roads[1], num_roads_remaining, jj);
+    //printf("\nThe shortest cost road is %c with a cost of %d\n", shortest.id, shortest.cost);
     
-    printf("\nThe shortest cost road is %c with a cost of %d\n", shortest.id, shortest.cost);
-    
-    //NEW STUFF
-    road_t first_five[5] = {roads[0], roads[1], roads[2],
-        roads[3], roads[4]};
-    
-    printf("New roads array has %ld roads stored in it\n", (sizeof(first_five) / sizeof(first_five[0])));
-    
-    shortest = shortest_path(first_five, first_five[0], first_five[1], 5, 0);
-    
-    printf("%d %c\n", shortest.cost, shortest.id);
-    
-    printf("The shortest road in the first_five array is %c\n", shortest.id);
-    
-    new_road = find_path(shortest, new_road, roads, num_roads_remaining);
+    int count = 0;
+
+    while(count < MAX_ROADS_POSS)
+    {
+        path[count] = find_path_one(shortest, roads); //***********************************************
+        count++;
+    }
+
+
+    //path[0] = new_road;
+
     printf("test switch statement: %c\n", new_road.id);
     
-
+    printf("done\n");
     
 }
 
@@ -118,7 +119,7 @@ void simulation_one(road_t roads[], int num_roads_remaining)
  *******************************************************************/
 road_t shortest_path(road_t roads[], road_t a, road_t b, int num_roads_remaining, int jj)
 {
-    //printf("\nThis is call %d\n", jj + 1);
+    printf("\nThis is call %d\n", jj + 1);
 
     if(a.cost < b.cost)
         shortest = a;
@@ -137,8 +138,8 @@ road_t shortest_path(road_t roads[], road_t a, road_t b, int num_roads_remaining
         return shortest;
     else
         shortest_path(roads, shortest, roads[jj], num_roads_remaining, jj);
-    //printf("INSIDE CALL: %d %c\n", shortest.cost, shortest.id);
-    return shortest;
+
+    //return shortest;
 }
 
 /********************************************************************
@@ -173,11 +174,28 @@ int count_lines(char *filename)
 }
 
 
-road_t find_path(road_t road, road_t new_road, road_t roads[], int num_roads_remaining)
+/********************************************************************
+* This function takes in a road and the array of all roads in the
+* simulation and, based on the road's ID, determines which road
+* should be next on the path by calling the shortest_path() function
+* and passing in the appropriate roads to compare against. Each call
+* to this function will add another road to the overall path until
+* and end road is reached and the path is complete.
+********************************************************************/
+road_t find_path_one(road_t road, road_t roads[])
 {
     road_t path_opt[5];
-    int jj = 0;
+    road_t new_road;
+
     switch(road.id) {
+        default:
+            path_opt[0] = roads[0];
+            path_opt[1] = roads[1];
+            path_opt[2] = roads[2];
+            path_opt[3] = roads[3];
+            path_opt[4] = roads[4];
+            new_road = shortest_path(path_opt, path_opt[0], path_opt[1], 4, 0);
+            break;
         case 'A':
             new_road = roads[5];
             printf("%c\n", new_road.id);
@@ -186,7 +204,7 @@ road_t find_path(road_t road, road_t new_road, road_t roads[], int num_roads_rem
             path_opt[0] = roads[6];
             path_opt[1] = roads[7];
             path_opt[2] = roads[8];
-            new_road = shortest_path(path_opt, path_opt[0], path_opt[1], 1, jj);
+            new_road = shortest_path(path_opt, path_opt[0], path_opt[1], 1, 0);
             break;
         case 'C':
             new_road = roads[9];
@@ -198,17 +216,17 @@ road_t find_path(road_t road, road_t new_road, road_t roads[], int num_roads_rem
             new_road = roads[11];
             break;
         case 'F':
-            new_road = shortest_path(roads, roads[12], roads[13], 0, jj);
+            new_road = shortest_path(roads, roads[12], roads[13], 0, 0);
             break;
         case 'G':
-            new_road = shortest_path(roads, roads[12], roads[13], 0, jj);
+            new_road = shortest_path(roads, roads[12], roads[13], 0, 0);
             break;
         case 'H':
             path_opt[0] = roads[18];
             path_opt[1] = roads[19];
             path_opt[2] = roads[20];
             path_opt[3] = roads[21];
-            new_road = shortest_path(path_opt, path_opt[0], path_opt[1], 2, jj);
+            new_road = shortest_path(path_opt, path_opt[0], path_opt[1], 2, 0);
             break;
         case 'I':
             new_road = roads[9];
@@ -217,96 +235,89 @@ road_t find_path(road_t road, road_t new_road, road_t roads[], int num_roads_rem
             path_opt[0] = roads[14];
             path_opt[1] = roads[15];
             path_opt[2] = roads[16];
-            new_road = shortest_path(path_opt, path_opt[0], path_opt[1], 1, jj);
+            new_road = shortest_path(path_opt, path_opt[0], path_opt[1], 1, 0);
             break;
         case 'K':
             path_opt[0] = roads[14];
             path_opt[1] = roads[15];
             path_opt[2] = roads[16];
-            new_road = shortest_path(path_opt, path_opt[0], path_opt[1], 1, jj);
+            new_road = shortest_path(path_opt, path_opt[0], path_opt[1], 1, 0);
             break;
         case 'L':
             path_opt[0] = roads[14];
             path_opt[1] = roads[15];
             path_opt[2] = roads[16];
-            new_road = shortest_path(path_opt, path_opt[0], path_opt[1], 1, jj);
+            new_road = shortest_path(path_opt, path_opt[0], path_opt[1], 1, 0);
             break;
         case 'M':
-            new_road = shortest_path(roads, roads[26], roads[27], 0, jj);
+            new_road = shortest_path(roads, roads[26], roads[27], 0, 0);
             break;
         case 'N':
             new_road = roads[17];
             break;
         case 'O':
-            new_road = shortest_path(roads, roads[22], roads[23], 0, jj);
+            new_road = shortest_path(roads, roads[22], roads[23], 0, 0);
             break;
         case 'P':
-            new_road = shortest_path(roads, roads[31], roads[32], 0, jj);
+            new_road = shortest_path(roads, roads[31], roads[32], 0, 0);
             break;
         case 'Q':
-            new_road = shortest_path(roads, roads[24], roads[25], 0, jj);
+            new_road = shortest_path(roads, roads[24], roads[25], 0, 0);
             break;
         case 'R':
-            new_road = shortest_path(roads, roads[28], roads[29], 0, jj);
+            new_road = shortest_path(roads, roads[28], roads[29], 0, 0);
             break;
         case 'S':
             new_road = roads[17];
             break;
         case 'T':
-            new_road = shortest_path(roads, roads[26], roads[27], 0, jj);
+            new_road = shortest_path(roads, roads[26], roads[27], 0, 0);
             break;
         case 'U':
             new_road = roads[30];
             break;
         case 'V':
-            new_road = shortest_path(roads, roads[31], roads[32], 0, jj);
+            new_road = shortest_path(roads, roads[31], roads[32], 0, 0);
             break;
         case 'W':
             new_road = roads[30];
             break;
         case 'X':
-            new_road = shortest_path(roads, roads[24], roads[25], 0, jj);
+            new_road = shortest_path(roads, roads[24], roads[25], 0, 0);
             break;
         case 'Y':
-            new_road = shortest_path(roads, roads[31], roads[32], 0, jj);
+            new_road = shortest_path(roads, roads[31], roads[32], 0, 0);
             break;
         case 'Z':
-            new_road = shortest_path(roads, roads[33], roads[34], 0, jj);
+            new_road = shortest_path(roads, roads[33], roads[34], 0, 0);
             break;
-        case '1':
+        case 'a':
             printf("You have reached your destination (27).");
             break;
-        case '2':
-            new_road = shortest_path(roads, roads[28], roads[29], 0, jj);
+        case 'b':
+            new_road = shortest_path(roads, roads[28], roads[29], 0, 0);
             break;
-        case '3':
+        case 'c':
             printf("You have reached your destination (29).");
             break;
-        case '4':
+        case 'd':
             new_road = roads[30];
             break;
-        case '5':
+        case 'e':
             printf("You have reached your destination (31).");
             break;
-        case '6':
+        case 'f':
             new_road = roads[30];
             break;
-        case '7':
+        case 'g':
             printf("You have reached your destination (33).");
             break;
-        case '8':
-            new_road = shortest_path(roads, roads[31], roads[32], 0, jj);
+        case 'h':
+            new_road = shortest_path(roads, roads[31], roads[32], 0, 0);
             break;
-        case '9':
+        case 'i':
             printf("You have reached your destination (35).");
             break;
-        default:
-            path_opt[0] = roads[0];
-            path_opt[1] = roads[1];
-            path_opt[2] = roads[2];
-            path_opt[3] = roads[3];
-            path_opt[4] = roads[4];
-            shortest = shortest_path(path_opt, path_opt[0], path_opt[1], 3, 0);
     }
     return new_road;
 }
