@@ -14,7 +14,6 @@ int main()
 {
     int num_lines = 0;
     int cars_count = 0;
-    //int roads_count = 0;
     char filename[26]; //look in to this
     int num_roads_remaining = 0;
     
@@ -68,7 +67,7 @@ void read_file(char *filename, road_t roads[], int num_lines)
     }
     for(ii = 0; ii < num_lines; ii++)
     {
-        fscanf(fp,"%d,%c\n", &roads[ii].cost, &roads[ii].id);
+        fscanf(fp,"%c,%d\n", &roads[ii].id, &roads[ii].cost);
         //printf("%d %c\n", roads[ii].cost, roads[ii].id);
     }
     
