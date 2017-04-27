@@ -8,7 +8,8 @@ For Windows 10:
   files (Traffic.jl and Simulator.jl) in the main Julia directory, and then 
   run the executable. This will open the Julia REPL. On that command line, 
   enter the following command:
-
+  
+    addprocs(1)
     include("Simulator.jl")
 
   This is the equivalent of main() and will run the program.
@@ -21,12 +22,20 @@ For Linux:
   On Linux, the REPL can be accessed from the command line. Do this by typing
   the following command:
 
-    julia
+    julia -p 2
 
-  This will open the Julia REPL. On that command line, enter the following:
+  This will open the Julia REPL with two processes. To add more processes, simply
+  change the number. IMPORTANT: Due to parallel commands used, "-p" must be at least 2!
+  Inside the REPL, enter the following:
 
     include("Simulator.jl")
 
+  This will print out an information message about the program. To run the program,
+  enter the following command in the REPL: simulate(X) 
+  with X being the number of cars that you want to have run through the simulator. 
+  A good starting point is 100,000. At orders of magnitude in the >=10,000,000 range,
+  the program will usually become unresponsive. 
+  
   Make sure that both Traffic.jl and Simulator.jl are in the same directory 
   that you call the REPL from.
 
