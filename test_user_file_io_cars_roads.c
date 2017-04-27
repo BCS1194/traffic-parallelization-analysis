@@ -1,4 +1,5 @@
 #include "cars.h"
+#include <stdbool.h>
 
 road_t shortest;
 road_t new_road;
@@ -96,13 +97,32 @@ void simulation_one(road_t roads[], int num_roads_remaining)
     //printf("\nThe shortest cost road is %c with a cost of %d\n", shortest.id, shortest.cost);
     
     int count = 0;
+    bool first = true;
+
+    printf("before while loop\n");
 
     while(count < MAX_ROADS_POSS)
     {
-        path[count] = find_path_one(shortest, roads); //***********************************************
+    printf("IN while loop, count = %d\n", count);
+        if(first)
+        {
+            printf("IN IF, count = %d\n", count);
+            path[count] = find_path_one(shortest, roads); //***********************************************
+            count++;
+            first = false;
+        }
+
+        path[count] = find_path_one(path[count - 1], roads);
         count++;
     }
 
+    printf("%c\n", path[0].id);
+    printf("%c\n", path[1].id);
+    printf("%c\n", path[2].id);
+    printf("%c\n", path[3].id);
+    printf("%c\n", path[4].id);
+    printf("%c\n", path[5].id);
+    printf("%c\n", path[6].id);
 
     //path[0] = new_road;
 
