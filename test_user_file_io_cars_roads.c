@@ -1,8 +1,11 @@
 #include "cars.h"
+#include <stdbool.h>
 
 road_t shortest;
 road_t new_road;
+road_t test_road[9];
 int cars_buffer[100];
+bool arrived = false;
 
 /********************************************************************
  * This is the driver function for the program.
@@ -77,38 +80,16 @@ void read_file(char *filename, road_t roads[], int num_lines)
  *******************************************************************/
 void simulation_one(road_t roads[], int num_roads_remaining)
 {
-    int jj = 0;
-    
-    //printf("\n%ld\n", (sizeof(roads) / sizeof(int)) / 2);
-    //printf("%d\n", num_roads_remaining);
-    
-    //printf("OUTSIDE CALL: %d %c\n", shortest.cost, shortest.id);
-    
-    
-    
-    //road_t first_road;
-    
-    shortest_path(roads, roads[0], roads[1], num_roads_remaining, jj);
-    
-    printf("\nThe shortest cost road is %c with a cost of %d\n", shortest.id, shortest.cost);
-    
-    //NEW STUFF
-    road_t first_five[5] = {roads[0], roads[1], roads[2],
-        roads[3], roads[4]};
-    
-    printf("New roads array has %ld roads stored in it\n", (sizeof(first_five) / sizeof(first_five[0])));
-    
-    shortest = shortest_path(first_five, first_five[0], first_five[1], 5, 0);
-    
-    printf("%d %c\n", shortest.cost, shortest.id);
-    
-    printf("The shortest road in the first_five array is %c\n", shortest.id);
-    
-    new_road = find_path(shortest, new_road, roads, num_roads_remaining);
-    printf("test switch statement: %c\n", new_road.id);
-    
-
-    
+    int k = 0;
+    for (int ii = 1; arrived != true; ii++) {
+        if (k == 0) {
+            test_road[k] = find_path(shortest, test_road[k], roads, 0);
+            //printf("IN If: test_road[k] = %c\n", test_road[k].id);
+            k++;
+        }
+        test_road[ii] = find_path(test_road[ii-1], test_road[ii], roads, 0);
+    }
+    //printf("2test switch statement: 1:%c 2:%c\n", shortest.id, new_road.id);
 }
 
 /********************************************************************
@@ -179,134 +160,172 @@ road_t find_path(road_t road, road_t new_road, road_t roads[], int num_roads_rem
     int jj = 0;
     switch(road.id) {
         case 'A':
+            printf("Case A.\n");
             new_road = roads[5];
-            printf("%c\n", new_road.id);
             break;
         case 'B':
+            printf("Case B.\n");
             path_opt[0] = roads[6];
             path_opt[1] = roads[7];
             path_opt[2] = roads[8];
-            new_road = shortest_path(path_opt, path_opt[0], path_opt[1], 1, jj);
+            new_road = shortest_path(path_opt, path_opt[0], path_opt[1], 2, jj);
             break;
         case 'C':
+            printf("Case C.\n");
             new_road = roads[9];
             break;
         case 'D':
+            printf("Case D.\n");
             new_road = roads[10];
             break;
         case 'E':
+            printf("Case E.\n");
             new_road = roads[11];
             break;
         case 'F':
-            new_road = shortest_path(roads, roads[12], roads[13], 0, jj);
+            printf("Case F.\n");
+            path_opt[0] = roads[12];
+            path_opt[1] = roads[13];
+            new_road = shortest_path(path_opt, path_opt[0], path_opt[1], 2, jj);
             break;
         case 'G':
-            new_road = shortest_path(roads, roads[12], roads[13], 0, jj);
+            printf("Case G.\n");
+            new_road = shortest_path(roads, roads[12], roads[13], 1, jj);
             break;
         case 'H':
+            printf("Case H.\n");
             path_opt[0] = roads[18];
             path_opt[1] = roads[19];
             path_opt[2] = roads[20];
             path_opt[3] = roads[21];
-            new_road = shortest_path(path_opt, path_opt[0], path_opt[1], 2, jj);
+            new_road = shortest_path(path_opt, path_opt[0], path_opt[1], 3, jj);
             break;
         case 'I':
+            printf("Case I.\n");
             new_road = roads[9];
             break;
         case 'J':
+            printf("Case J.\n");
             path_opt[0] = roads[14];
             path_opt[1] = roads[15];
             path_opt[2] = roads[16];
-            new_road = shortest_path(path_opt, path_opt[0], path_opt[1], 1, jj);
+            new_road = shortest_path(path_opt, path_opt[0], path_opt[1], 2, jj);
             break;
         case 'K':
+            printf("Case K.\n");
             path_opt[0] = roads[14];
             path_opt[1] = roads[15];
             path_opt[2] = roads[16];
-            new_road = shortest_path(path_opt, path_opt[0], path_opt[1], 1, jj);
+            new_road = shortest_path(path_opt, path_opt[0], path_opt[1], 2, jj);
             break;
         case 'L':
+            printf("Case L.\n");
             path_opt[0] = roads[14];
             path_opt[1] = roads[15];
             path_opt[2] = roads[16];
-            new_road = shortest_path(path_opt, path_opt[0], path_opt[1], 1, jj);
+            new_road = shortest_path(path_opt, path_opt[0], path_opt[1], 2, jj);
             break;
         case 'M':
-            new_road = shortest_path(roads, roads[26], roads[27], 0, jj);
+            printf("Case M.\n");
+            new_road = shortest_path(roads, roads[26], roads[27], 1, jj);
             break;
         case 'N':
+            printf("Case N.\n");
             new_road = roads[17];
             break;
         case 'O':
-            new_road = shortest_path(roads, roads[22], roads[23], 0, jj);
+            printf("Case O.\n");
+            new_road = shortest_path(roads, roads[22], roads[23], 1, jj);
             break;
         case 'P':
-            new_road = shortest_path(roads, roads[31], roads[32], 0, jj);
+            printf("Case P.\n");
+            new_road = shortest_path(roads, roads[31], roads[32], 1, jj);
             break;
         case 'Q':
-            new_road = shortest_path(roads, roads[24], roads[25], 0, jj);
+            printf("Case Q.\n");
+            new_road = shortest_path(roads, roads[24], roads[25], 1, jj);
             break;
         case 'R':
-            new_road = shortest_path(roads, roads[28], roads[29], 0, jj);
+            printf("Case R.\n");
+            new_road = shortest_path(roads, roads[28], roads[29], 1, jj);
             break;
         case 'S':
+            printf("Case S.\n");
             new_road = roads[17];
             break;
         case 'T':
-            new_road = shortest_path(roads, roads[26], roads[27], 0, jj);
+            printf("Case T.\n");
+            new_road = shortest_path(roads, roads[26], roads[27], 1, jj);
             break;
         case 'U':
+            printf("Case U.\n");
             new_road = roads[30];
             break;
         case 'V':
-            new_road = shortest_path(roads, roads[31], roads[32], 0, jj);
+            printf("Case V.\n");
+            new_road = shortest_path(roads, roads[31], roads[32], 1, jj);
             break;
         case 'W':
+            printf("Case W.\n");
             new_road = roads[30];
             break;
         case 'X':
-            new_road = shortest_path(roads, roads[24], roads[25], 0, jj);
+            printf("Case X.\n");
+            new_road = shortest_path(roads, roads[24], roads[25], 1, jj);
             break;
         case 'Y':
-            new_road = shortest_path(roads, roads[31], roads[32], 0, jj);
+            printf("Case Y.\n");
+            new_road = shortest_path(roads, roads[31], roads[32], 1, jj);
             break;
         case 'Z':
-            new_road = shortest_path(roads, roads[33], roads[34], 0, jj);
+            printf("Case Z.\n");
+            new_road = shortest_path(roads, roads[33], roads[34], 1, jj);
             break;
         case '1':
-            printf("You have reached your destination (27).");
+            printf("You have reached your destination (27).\n");
+            arrived = true;
             break;
         case '2':
-            new_road = shortest_path(roads, roads[28], roads[29], 0, jj);
+            printf("Case 28.\n");
+            new_road = shortest_path(roads, roads[28], roads[29], 1, jj);
             break;
         case '3':
-            printf("You have reached your destination (29).");
+            printf("You have reached your destination (29).\n");
+            arrived = true;
             break;
         case '4':
+            printf("Case 30.\n");
             new_road = roads[30];
             break;
         case '5':
-            printf("You have reached your destination (31).");
+            printf("You have reached your destination (31).\n");
+            arrived = true;
             break;
         case '6':
+            printf("Case 32.\n");
             new_road = roads[30];
             break;
         case '7':
-            printf("You have reached your destination (33).");
+            printf("You have reached your destination (33).\n");
+            arrived = true;
             break;
         case '8':
-            new_road = shortest_path(roads, roads[31], roads[32], 0, jj);
+            printf("Case 34.\n");
+            new_road = shortest_path(roads, roads[31], roads[32], 1, jj);
             break;
         case '9':
-            printf("You have reached your destination (35).");
+            printf("You have reached your destination (35).\n");
+            arrived = true;
             break;
         default:
+            printf("Default.\n");
             path_opt[0] = roads[0];
             path_opt[1] = roads[1];
             path_opt[2] = roads[2];
             path_opt[3] = roads[3];
             path_opt[4] = roads[4];
-            shortest = shortest_path(path_opt, path_opt[0], path_opt[1], 3, 0);
+            new_road = shortest_path(path_opt, path_opt[0], path_opt[1], 4, 0);
+            break;
     }
     return new_road;
 }
