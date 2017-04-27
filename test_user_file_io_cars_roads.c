@@ -37,7 +37,7 @@ int main()
      printf("%d\n", cars_buffer[i]);
      }*/
     
-    simulation_one(roads, num_roads_remaining);
+    simulation_one(roads, num_roads_remaining, cars_count);
     
     //maybe implement another loop here to initialize all 100 entries to 0 first
 }
@@ -77,18 +77,70 @@ void read_file(char *filename, road_t roads[], int num_lines)
 /********************************************************************
  * Simulation.
  *******************************************************************/
-void simulation_one(road_t roads[], int num_roads_remaining)
+void simulation_one(road_t roads[], int num_roads_remaining, int cars_count)
 {
-    int k = 0;
-    for (int ii = 1; arrived != true; ii++) {
-        if (k == 0) {
-            test_road[k] = find_path(shortest, test_road[k], roads, 0);
-            //printf("IN If: test_road[k] = %c\n", test_road[k].id);
-            k++;
-        }
-        test_road[ii] = find_path(test_road[ii-1], test_road[ii], roads, 0);
+    car_t cars[cars_count];
+
+    //initialize cars to be used
+    for (int kk = 0; kk < cars_count; kk++)
+    {
+        car_t new_car = {kk, 1};
+        cars[kk] = new_car;
     }
-    //printf("2test switch statement: 1:%c 2:%c\n", shortest.id, new_road.id);
+    //printf("fifth car is car #%d\n", cars[4].id);
+
+
+    /* As it is right now, we either traverse all cars once per road, or all roads once per car.
+     * I have it set up to do all cars once per road currently. So assuming 100 cars, that means
+     * 100 cars will be sorted from the origin to the destination for each road until the arrival
+     * boolean is tripped.
+     *
+     * For each iteration, the road's cost is being incrememnted and the previous road's cost is
+     * decremented.
+     *
+     * When run, the results I see indicate that the first car in the array is traversing all roads
+     * along the initial shortest path. Any other cars after the first car will report they have
+     * reached their destination (Case 32) without actually traversing the map.
+     *
+     * There are other nuances with the execution output between 1 car and 100 cars. In writing this,
+     * I feel that I may still be thinking about this wrongly....
+     *
+     * Good luck
+     */
+
+
+    //this loop will traverse the entire map
+    for (int ii = 1; arrived != true; ii++) //this boolean needs to be reworked, maybe
+    {
+        printf("\nROAD %c\n", roads[ii].id);
+
+        //this loop will traverse the entire array of cars
+        for(int jj = 0; jj < cars_count; jj++)
+        {
+            printf("CAR %d\n", cars[jj].id);
+
+            if (ii == 1)
+            {
+                test_road[ii - 1] = find_path(shortest, test_road[ii - 1], roads, 0);
+                //printf("IN If: test_road[k] = %c\n", test_road[k].id);
+
+            }
+
+            test_road[ii] = find_path(test_road[ii - 1], test_road[ii], roads, 0);
+            cars[jj].current_road = test_road[ii];
+
+            //increment cost of current road by the weight of the current car
+            roads[ii].cost += cars[jj].weight;
+
+            //decrement cost of previous road by the weight value of current car
+            roads[ii - 1].cost -= cars[jj].weight; //check this
+        }
+
+        
+
+
+    }
+
 }
 
 /********************************************************************
