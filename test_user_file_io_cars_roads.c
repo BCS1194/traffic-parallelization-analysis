@@ -37,21 +37,8 @@ int main()
         cars_buffer[i] = 1;
     }
     
-    /*for(int i = 0; i < 100; i++)
-     {
-     printf("%d\n", cars_buffer[i]);
-     }*/
-    //while (cars_count != 0) {
     printf("cars_count: %d\n", cars_count);
     simulation_one(roads, num_roads_remaining, cars_count);
-    
-    cars_count--;
-    //}
-    if (cars_count == 0) {
-        new = false;
-    }
-    
-    //maybe implement another loop here to initialize all 100 entries to 0 first
 }
 
 /********************************************************************
@@ -99,24 +86,21 @@ void simulation_one(road_t roads[], int num_roads_remaining, int cars_count)
         car_t new_car = {kk, 1};
         cars[kk] = new_car;
     }
-    //printf("fifth car is car #%d\n", cars[4].id);
-    //   while (new) {
-    
-    //printf("IN simulation_one\n K: %d\n", k);
+
 #   pragma omp parallel for
     for(int jj = 0; jj < cars_count; jj++)
     {
         arrived = false;
         shortest.id = '\0';
         int k = 0;
-//#   pragma omp parallel for
+#   pragma omp critical (arrv)
         for (int ii = 1; arrived != true; ii++) {
             if (k == 0) {
                 test_road[k] = find_path(shortest, test_road[k], roads, 0);
                 test_road[k].cost += cars[jj].weight;
                 k++;
             }
-            //printf("AFTER if IN simulation_one\n");
+
             test_road[ii] = find_path(test_road[ii-1], test_road[ii], roads, 0);
             cars[jj].current_road = test_road[ii];
             
@@ -137,25 +121,19 @@ void simulation_one(road_t roads[], int num_roads_remaining, int cars_count)
  *******************************************************************/
 road_t shortest_path(road_t roads[], road_t a, road_t b, int num_roads_remaining, int jj)
 {
-    //printf("\nThis is call %d\n", jj + 1);
     if(a.cost < b.cost)
         shortest = a;
     else
         shortest = b;
     
-    //printf("INSIDE CALL: %d %c\n", shortest.cost, shortest.id);
-    
     num_roads_remaining--;
     jj++;
-    
-    //printf("num_roads_remaining = %d\n", num_roads_remaining);
-    //printf("index = %d\n", jj);
     
     if(num_roads_remaining == 0)
         return shortest;
     else
         shortest_path(roads, shortest, roads[jj], num_roads_remaining, jj);
-    //printf("INSIDE CALL: %d %c\n", shortest.cost, shortest.id);
+
     return shortest;
 }
 
