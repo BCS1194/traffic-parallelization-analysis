@@ -1,5 +1,5 @@
 #include "cars.h"
-//#include <omp.h>
+#include <omp.h>
 
 
 
@@ -7,9 +7,9 @@ road_t shortest;
 road_t new_road;
 road_t test_road[9];
 int cars_buffer[100];
-//bool arrived = false;
+bool arrived = false;
 bool new = true;
-car_t cars[];
+//car_t cars[];
 
 
 
@@ -89,29 +89,42 @@ void simulation_one(road_t roads[], int num_roads_remaining, int cars_count)
         cars[kk] = new_car;
     }
     
-#   pragma omp parallel for
+#   pragma omp parallel for default(none) shared(arrived, shortest, test_road, new_road, cars, cars_count, roads)
     for(int jj = 0; jj < cars_count; jj++)
     {
-        //cars[jj].arrived = false;
+#       pragma omp critical
+        arrived = false;
         shortest.id = '\0';
         int k = 0;
-        #   pragma omp critical (arrv)
-        for (int ii = 1; cars[jj].arrived != true; ii++) {
-            if (k == 0) {
+        #   pragma omp critical 
+        for (int ii = 1; arrived != true; ii++) {
+        //printf("B4test[ii]: %d\n", test_road[ii].cost);
+        //printf("B4test[ii-1]: %d\n", test_road[ii-1].cost);
+    
+   if (k == 0) {
+//# pragma omp critical (sw)
                 test_road[k] = find_path(shortest, test_road[k], roads, &cars[jj], 0, jj);
                 test_road[k].cost += cars[jj].weight;
                 k++;
+		printf("In IF\n");
             }
-            
+//#	    pragma omp critical (sw)           
             test_road[ii] = find_path(test_road[ii-1], test_road[ii], roads, &cars[jj], 0, jj);
             cars[jj].current_road = test_road[ii];
-            
+            int pp = 0;
             //increment cost of current road by the weight of the current car
-            test_road[ii].cost += cars[jj].weight;
-            
+            if (test_road[ii].id == roads[pp++].id) {
+		roads[pp].cost += cars[jj].weight;
+		pp = 0;
+            }
             //decrement cost of previous road by the weight value of current car
-            test_road[ii - 1].cost -= cars[jj].weight; //check this
-            
+            if (test_road[ii-1].id == roads[pp++].id) {
+		//roads[pp].cost -= cars[jj].weight; //check this
+            	pp = 0;
+	    }
+	//printf("test[ii]: %d\n", test_road[ii].cost);
+        //printf("test[ii-1]: %d\n", test_road[ii-1].cost);
+    
         }
         printf("count %d\n", cars_count);
     }
@@ -172,11 +185,14 @@ int count_lines(char *filename)
 }
 
 
-road_t find_path(road_t road, road_t new_road, road_t roads[], car_t cars[], int num_roads_remaining, int ll)
+road_t find_path(road_t road, road_t new_road, road_t roads[], car_t cass[], int num_roads_remaining, int ll)
 {
     road_t path_opt[5];
     int jj = 0;
-    switch(road.id) {
+    
+//#   pragma omp critical (sw)
+    switch (road.id)
+    {
         case 'A':
             printf("Road 1.\n");
             new_road = roads[5];
@@ -301,7 +317,7 @@ road_t find_path(road_t road, road_t new_road, road_t roads[], car_t cars[], int
             break;
         case '1':
             printf("You have reached your destination (Road 27).\n");
-            cars[ll].arrived = true;
+            arrived = true;
             break;
         case '2':
             printf("Road 28.\n");
@@ -309,7 +325,7 @@ road_t find_path(road_t road, road_t new_road, road_t roads[], car_t cars[], int
             break;
         case '3':
             printf("You have reached your destination (Road 29).\n");
-            cars[ll].arrived = true;
+            arrived = true;
             break;
         case '4':
             printf("Road 30.\n");
@@ -317,7 +333,7 @@ road_t find_path(road_t road, road_t new_road, road_t roads[], car_t cars[], int
             break;
         case '5':
             printf("You have reached your destination (Road 31).\n");
-            cars[ll].arrived = true;
+            arrived = true;
             break;
         case '6':
             printf("Road 32.\n");
@@ -325,7 +341,7 @@ road_t find_path(road_t road, road_t new_road, road_t roads[], car_t cars[], int
             break;
         case '7':
             printf("You have reached your destination (Road 33).\n");
-            cars[ll].arrived = true;
+            arrived = true;
             break;
         case '8':
             printf("Road 34.\n");
@@ -333,7 +349,7 @@ road_t find_path(road_t road, road_t new_road, road_t roads[], car_t cars[], int
             break;
         case '9':
             printf("You have reached your destination (Road 35).\n");
-            cars[ll].arrived = true;
+            arrived = true;
             break;
         default:
             printf("Default.\n");
