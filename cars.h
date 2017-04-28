@@ -3,6 +3,10 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
+#include <string.h> //might not need this?
+#include <pthread.h>
+#include <unistd.h> //might not need this?
 
 
 typedef struct road {
@@ -17,8 +21,8 @@ typedef struct car {
     road_t roads_traveled[];
 } car_t;
 
-void get_filename(char *filename);
 int count_lines(char *filename);
+void get_filename(char *filename);
 void read_file(char *filename, road_t roads[], int lines);
 void simulation_one(road_t roads[], int num_roads_remaining, int cars_count);
 road_t find_path(road_t road, road_t new_road, road_t roads[], int num_roads_remaining);
