@@ -69,7 +69,6 @@ void read_file(char *filename, road_t roads[], int num_lines)
     for(ii = 0; ii < num_lines; ii++)
     {
         fscanf(fp,"%c,%d\n", &roads[ii].id, &roads[ii].cost);
-        //printf("%d %c\n", roads[ii].cost, roads[ii].id);
     }
     
     fclose(fp);
@@ -96,37 +95,29 @@ void simulation_one(road_t roads[], int num_roads_remaining, int cars_count)
         arrived = false;
         shortest.id = '\0';
         int k = 0;
-        #   pragma omp critical 
+        
+#       pragma omp critical
         for (int ii = 1; arrived != true; ii++) {
-        //printf("B4test[ii]: %d\n", test_road[ii].cost);
-        //printf("B4test[ii-1]: %d\n", test_road[ii-1].cost);
-    
-   if (k == 0) {
-//# pragma omp critical (sw)
+            if (k == 0) {
                 test_road[k] = find_path(shortest, test_road[k], roads, &cars[jj], 0, jj);
                 test_road[k].cost += cars[jj].weight;
                 k++;
-		printf("In IF\n");
             }
-//#	    pragma omp critical (sw)           
+          
             test_road[ii] = find_path(test_road[ii-1], test_road[ii], roads, &cars[jj], 0, jj);
             cars[jj].current_road = test_road[ii];
             int pp = 0;
-            //increment cost of current road by the weight of the current car
+
             if (test_road[ii].id == roads[pp++].id) {
-		roads[pp].cost += cars[jj].weight;
-		pp = 0;
+                roads[pp].cost += cars[jj].weight;
+                pp = 0;
             }
-            //decrement cost of previous road by the weight value of current car
+
             if (test_road[ii-1].id == roads[pp++].id) {
-		//roads[pp].cost -= cars[jj].weight; //check this
+                roads[pp].cost -= cars[jj].weight;
             	pp = 0;
-	    }
-	//printf("test[ii]: %d\n", test_road[ii].cost);
-        //printf("test[ii-1]: %d\n", test_road[ii-1].cost);
-    
+            }
         }
-        printf("count %d\n", cars_count);
     }
 }
 
@@ -190,7 +181,6 @@ road_t find_path(road_t road, road_t new_road, road_t roads[], car_t cass[], int
     road_t path_opt[5];
     int jj = 0;
     
-//#   pragma omp critical (sw)
     switch (road.id)
     {
         case 'A':
