@@ -52,3 +52,5 @@ For Linux:
 
 Use the provided Makefile to compile road_test.c.
 Run the program with "./test".
+Use the provided "input.txt" file when prompted to enter a file.
+Pick a number of cars between 1-100.
