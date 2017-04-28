@@ -86,7 +86,7 @@ void simulation_one(road_t roads[], int num_roads_remaining, int cars_count)
         car_t new_car = {kk, 1};
         cars[kk] = new_car;
     }
-
+    
 #   pragma omp parallel for
     for(int jj = 0; jj < cars_count; jj++)
     {
@@ -100,7 +100,7 @@ void simulation_one(road_t roads[], int num_roads_remaining, int cars_count)
                 test_road[k].cost += cars[jj].weight;
                 k++;
             }
-
+            
             test_road[ii] = find_path(test_road[ii-1], test_road[ii], roads, 0);
             cars[jj].current_road = test_road[ii];
             
@@ -133,7 +133,7 @@ road_t shortest_path(road_t roads[], road_t a, road_t b, int num_roads_remaining
         return shortest;
     else
         shortest_path(roads, shortest, roads[jj], num_roads_remaining, jj);
-
+    
     return shortest;
 }
 
