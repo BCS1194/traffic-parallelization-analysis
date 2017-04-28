@@ -1,4 +1,5 @@
 #include "cars.h"
+#include <omp.h>
 
 
 
@@ -102,11 +103,13 @@ void simulation_one(road_t roads[], int num_roads_remaining, int cars_count)
     //   while (new) {
     
     //printf("IN simulation_one\n K: %d\n", k);
+#   pragma omp parallel for
     for(int jj = 0; jj < cars_count; jj++)
     {
         arrived = false;
         shortest.id = '\0';
         int k = 0;
+//#   pragma omp parallel for
         for (int ii = 1; arrived != true; ii++) {
             if (k == 0) {
                 test_road[k] = find_path(shortest, test_road[k], roads, 0);
