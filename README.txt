@@ -38,6 +38,15 @@ For Linux:
   
   Make sure that both Traffic.jl and Simulator.jl are in the same directory 
   that you call the REPL from.
+  
+  ---
+  
+  To run the Julia version with visuals, enter the following instead of include("Simulator.jl"):
+  
+    include("Simulator_Visual.jl")
+    
+  This version requires a package that will be downloaded when running for the first
+  time. This requires some additional disk space.
 
 ----------------------------  C Information  ---------------------------
 
